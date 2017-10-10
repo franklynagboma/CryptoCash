@@ -1,42 +1,55 @@
 package com.franklyn.alc.cryptocash.scrolling.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.franklyn.alc.cryptocash.R;
-import com.franklyn.alc.cryptocash.add_card.fragment.AddCardFragment;
+import com.franklyn.alc.cryptocash.app.AppController;
+import com.franklyn.alc.cryptocash.constant.CryptoInterface;
+import com.franklyn.alc.cryptocash.crypto_card.fragment.CryptoCardFragment;
+import com.franklyn.alc.cryptocash.scrolling.pojo.CashValue;
+import com.franklyn.alc.cryptocash.scrolling.presenter.Presenter;
 
-import butterknife.BindView;
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class ScrollingActivity extends AppCompatActivity implements AddCardFragment.SendAddContent{
+
+public class ScrollingActivity extends AppCompatActivity
+        implements CryptoInterface.PresenterToScrolling{
 
 
     private final String LOG_TAG = ScrollingActivity.class.getSimpleName();
-    private AddCardFragment addCardFragment;
-    private final String ADD_CARD = "add_card_fragment";
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    private final String FRAGMENT_TAG = "fragment";
+    private CryptoCardFragment cryptoCardFragment;
+    private CryptoInterface.ScrollingToPresenter scrollingToPresenter;
+    private Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        presenter = new Presenter(this, this);
+        setScrollingToPresenter(presenter);
+        cryptoCardFragment = new CryptoCardFragment();
 
-        addCardFragment = new AddCardFragment();
+    }
 
+    public void setScrollingToPresenter(CryptoInterface.ScrollingToPresenter
+                                                scrollingToPresenter) {
+        this.scrollingToPresenter = scrollingToPresenter;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //get cashValue list;
+        AppController.getInstance().startProgress("Loading...", this);
+        presenter.getUSDToCountryCash();
     }
 
     @Override
@@ -60,14 +73,28 @@ public class ScrollingActivity extends AppCompatActivity implements AddCardFragm
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.fab)
-    public void onFabClicked(){
-        //show dialogFragment
-        addCardFragment.show(getSupportFragmentManager(),ADD_CARD);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
-    public void sendContent(String crypto, String country) {
-        Log.i(LOG_TAG, "Seen:" +crypto +" "+ country);
+    public void sendCashReceived() {
+        //call fragment to show list
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                cryptoCardFragment, FRAGMENT_TAG).commit();
+    }
+
+    @Override
+    public void sendList(ArrayList<CashValue> cashValueList) {
+
+    }
+
+    @Override
+    public void sendError(String error) {
+        /*if(error.equalsIgnoreCase("Please refresh page"){
+            //call app refresh to call getUSDToCountryCash().
+        }*/
+        AppController.getInstance().toastMsg(this, error);
     }
 }

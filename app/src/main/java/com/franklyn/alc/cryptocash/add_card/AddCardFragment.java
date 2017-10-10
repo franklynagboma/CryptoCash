@@ -1,4 +1,4 @@
-package com.franklyn.alc.cryptocash.add_card.fragment;
+package com.franklyn.alc.cryptocash.add_card;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -98,16 +98,10 @@ public class AddCardFragment extends DialogFragment implements AdapterView.OnIte
         void sendContent(String crypto, String country);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            send = (SendAddContent) context;
-        }
-        catch (ClassCastException i){
-            throw new ClassCastException(context.toString());
-        }
+    public void setSend(SendAddContent send) {
+        this.send = send;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
