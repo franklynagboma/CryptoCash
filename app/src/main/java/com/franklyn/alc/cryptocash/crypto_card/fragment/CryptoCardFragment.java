@@ -1,16 +1,13 @@
 package com.franklyn.alc.cryptocash.crypto_card.fragment;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +15,10 @@ import android.view.ViewGroup;
 
 import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.add_card.AddCardFragment;
+import com.franklyn.alc.cryptocash.crypto_card.adapter.CustomAdapter;
+import com.franklyn.alc.cryptocash.db_lite.CryptoContract;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +28,7 @@ import butterknife.OnClick;
  * Created by AGBOMA franklyn on 10/10/17.
  */
 
-public class CryptoCardFragment extends Fragment implements AddCardFragment.SendAddContent,
-        LoaderManager.LoaderCallbacks<Cursor>{
+public class CryptoCardFragment extends Fragment implements AddCardFragment.SendAddContent{
 
 
     private final String LOG_TAG = CryptoCardFragment.class.getSimpleName();
@@ -36,6 +36,11 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     private AddCardFragment addCardFragment;
     private final String ADD_CARD = "add_card_fragment";
     private boolean isTab, isLand;
+    private static ArrayList<String> getIdCount;
+    private CustomAdapter customAdapter;
+    private String[] columns = {
+            CryptoContract.CardAddedColumn.CRYPTO_TYPE,
+            CryptoContract.CardAddedColumn.COUNTRY_TYPE };
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.items_list)
@@ -54,7 +59,6 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(0, null, this);
     }
 
     @Nullable
@@ -75,8 +79,16 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
                 itemList.setLayoutManager(new GridLayoutManager(context, 5));
         }
 
+        customAdapter = new CustomAdapter(
+                context,
+                CryptoContract.CardAdded.CONTENT_URI,
+                CryptoContract.CardAdded.PROJECTIONS,
+                CryptoContract.CardAdded.SORT_ORDER);
+
         addCardFragment = new AddCardFragment();
         addCardFragment.setSend(this);
+
+        itemList.setAdapter(customAdapter);
 
         return cardItems;
 
@@ -91,21 +103,19 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     @Override
     public void sendContent(String crypto, String country) {
         Log.i(LOG_TAG, "Seen:" +crypto +" "+ country);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CryptoContract.CardAdded.CRYPTO_TYPE, crypto);
+        contentValues.put(CryptoContract.CardAdded.COUNTRY_TYPE, country);
+        context.getContentResolver().insert(CryptoContract.CardAdded.CONTENT_URI, contentValues);
+        contentValues.clear();
+        //reinitialize adapter for new data to be visible to user.
+        customAdapter = new CustomAdapter(
+                context,
+                CryptoContract.CardAdded.CONTENT_URI,
+                CryptoContract.CardAdded.PROJECTIONS,
+                CryptoContract.CardAdded.SORT_ORDER);
+
+        itemList.setAdapter(customAdapter);
     }
 
-
-    //loader
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-    }
 }

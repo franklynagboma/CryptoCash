@@ -20,7 +20,6 @@ public interface CryptoInterface {
         void sendError(String error);
     }
     interface ModelToPresenterScrolling {
-        void cashReceived();
-        void getError(String error);
+        void cashReceived(String error);
     }
 }

@@ -1,8 +1,9 @@
 <resources>
-    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_height">250dp</dimen>
     <dimen name="screen_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_size">24sp</dimen>
     <dimen name="select_size">17sp</dimen>
     <dimen name="selector_size">22sp</dimen>
+    <dimen name="arrow_size">28dp</dimen>
 </resources>

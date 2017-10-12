@@ -1,7 +1,8 @@
 <resources>
-    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_size">21sp</dimen>
     <dimen name="select_size">15sp</dimen>
     <dimen name="selector_size">18sp</dimen>
+    <dimen name="arrow_size">25dp</dimen>
 </resources>

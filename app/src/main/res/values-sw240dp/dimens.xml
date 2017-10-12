@@ -4,4 +4,5 @@
     <dimen name="title_size">17sp</dimen>
     <dimen name="select_size">12sp</dimen>
     <dimen name="selector_size">14sp</dimen>
+    <dimen name="arrow_size">15dp</dimen>
 </resources>

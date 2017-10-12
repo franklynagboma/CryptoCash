@@ -42,20 +42,17 @@ public class Presenter implements CryptoInterface.ScrollingToPresenter,
         if(!AppController.cashReceived)
             model.getCashValue();
         else
-            cashReceived();
+            cashReceived("");
     }
 
     @Override
-    public void cashReceived() {
+    public void cashReceived(String error) {
         //save all cash equivalent to 1 USD
         if(AppController.cashReceived)
             presenterToScrolling.sendCashReceived();
-        else
-            presenterToScrolling.sendError("Please refresh page");
+        else {
+            presenterToScrolling.sendError(error);
+        }
     }
 
-    @Override
-    public void getError(String error) {
-
-    }
 }

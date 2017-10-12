@@ -80,6 +80,7 @@ public class ScrollingActivity extends AppCompatActivity
 
     @Override
     public void sendCashReceived() {
+        AppController.getInstance().stopProgress();
         //call fragment to show list
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 cryptoCardFragment, FRAGMENT_TAG).commit();
@@ -87,7 +88,6 @@ public class ScrollingActivity extends AppCompatActivity
 
     @Override
     public void sendList(ArrayList<CashValue> cashValueList) {
-
     }
 
     @Override
@@ -95,6 +95,7 @@ public class ScrollingActivity extends AppCompatActivity
         /*if(error.equalsIgnoreCase("Please refresh page"){
             //call app refresh to call getUSDToCountryCash().
         }*/
+        AppController.getInstance().stopProgress();
         AppController.getInstance().toastMsg(this, error);
     }
 }

@@ -23,9 +23,7 @@ public class CryptoContract {
     public interface CardAddedColumn {
 
         String CRYPTO_TYPE = "cypto_type";
-        String CRYPTO_RATE = "cypto_rate";
         String COUNTRY_TYPE = "country_type";
-        String COUNTRY_RATE = "country_rate";
     }
 
     public CryptoContract() {
@@ -45,7 +43,7 @@ public class CryptoContract {
                 +"/vnd."+ AUTHORITY +"."+ PATH_CARD_ADDED;
 
         public static final String[] PROJECTIONS = {
-                _ID, CRYPTO_TYPE, CRYPTO_RATE, COUNTRY_TYPE, COUNTRY_RATE };
+                _ID, CRYPTO_TYPE, COUNTRY_TYPE };
 
         //Sorting type
         public static final String SORT_ORDER = _ID +" ASC";

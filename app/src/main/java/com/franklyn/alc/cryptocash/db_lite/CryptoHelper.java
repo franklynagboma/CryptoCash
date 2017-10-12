@@ -29,9 +29,7 @@ public class CryptoHelper extends SQLiteOpenHelper {
             + CardTable.CARD_ADD_TABLE +"("
             + BaseColumns._ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
             + CryptoContract.CardAdded.CRYPTO_TYPE +" VARCHAR NOT NULL, "
-            + CryptoContract.CardAdded.CRYPTO_RATE +" VARCHAR NOT NULL, "
-            + CryptoContract.CardAdded.COUNTRY_TYPE +" VARCHAR NOT NULL, "
-            + CryptoContract.CardAdded.COUNTRY_RATE +" VARCHAR NOT NULL" +")";
+            + CryptoContract.CardAdded.COUNTRY_TYPE +" VARCHAR NOT NULL" +")";
 
     @Override
     public void onCreate(SQLiteDatabase db) {

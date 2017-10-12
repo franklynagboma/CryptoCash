@@ -17,6 +17,7 @@ import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.scrolling.pojo.CashValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by AGBOMA franklyn on 10/10/17.
@@ -30,10 +31,11 @@ public class AppController extends Application {
     public static final String TAG = "json_obj_reg";
     private RequestQueue requestQueue;
     private ProgressDialog loading;
-    public static ArrayList<CashValue> cashValueList;
+    //public static ArrayList<CashValue> cashValueList;
     public final static String BASE_CASH_API = "https://openexchangerates.org/api/" +
-            "latest.json?app_id=" + getInstance().getString(R.string.currency_app_id);
+            "latest.json?app_id=2d4dbd65d94b4a90b99c1162f4c33005";
 
+    public static HashMap<String, Double> cashValueList;
 
     public static double NGN = 0.0;
     public static double GHS = 0.0;
@@ -60,7 +62,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        cashValueList = new ArrayList<>();
+        cashValueList = new HashMap<>();
 
     }
 
