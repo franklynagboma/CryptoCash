@@ -1,38 +1,38 @@
-package com.franklyn.alc.cryptocash.scrolling.presenter;
+package com.franklyn.alc.cryptocash.host.presenter;
 
 import android.content.Context;
 
 import com.franklyn.alc.cryptocash.app.AppController;
 import com.franklyn.alc.cryptocash.constant.CryptoInterface;
-import com.franklyn.alc.cryptocash.scrolling.activity.ScrollingActivity;
-import com.franklyn.alc.cryptocash.scrolling.model.Model;
+import com.franklyn.alc.cryptocash.host.activity.HostActivity;
+import com.franklyn.alc.cryptocash.host.model.Model;
 
 /**
  * Created by AGBOMA franklyn on 10/10/17.
  */
 
-public class Presenter implements CryptoInterface.ScrollingToPresenter,
-        CryptoInterface.ModelToPresenterScrolling {
+public class Presenter implements CryptoInterface.HostToPresenter,
+        CryptoInterface.ModelToPresenterHost {
 
     private final String LOG_TAG = Presenter.class.getSimpleName();
     private Context context;
-    private CryptoInterface.PresenterToScrolling presenterToScrolling;
+    private CryptoInterface.PresenterToHost presenterToHost;
     private Model model;
 
     public Presenter() {
     }
 
-    public Presenter(Context context, ScrollingActivity activity) {
+    public Presenter(Context context, HostActivity activity) {
         this.context = context;
-        setPresenterToScrolling(activity);
+        setPresenterToHost(activity);
         model = new Model(context);
-        model.setModelToPresenterScrolling(this);
+        model.setModelToPresenterHost(this);
 
     }
 
-    private void setPresenterToScrolling(CryptoInterface.PresenterToScrolling
-                                                 presenterToScrolling) {
-        this.presenterToScrolling = presenterToScrolling;
+    private void setPresenterToHost(CryptoInterface.PresenterToHost
+                                                 presenterToHost) {
+        this.presenterToHost = presenterToHost;
     }
 
     @Override
@@ -49,9 +49,9 @@ public class Presenter implements CryptoInterface.ScrollingToPresenter,
     public void cashReceived(String error) {
         //save all cash equivalent to 1 USD
         if(AppController.cashReceived)
-            presenterToScrolling.sendCashReceived();
+            presenterToHost.sendCashReceived();
         else {
-            presenterToScrolling.sendError(error);
+            presenterToHost.sendError(error);
         }
     }
 

@@ -1,20 +1,9 @@
-package com.franklyn.alc.cryptocash.scrolling.model;
+package com.franklyn.alc.cryptocash.host.model;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.franklyn.alc.cryptocash.app.AppController;
 import com.franklyn.alc.cryptocash.constant.CryptoInterface;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by AGBOMA franklyn on 10/10/17.
@@ -24,7 +13,7 @@ public class Model {
 
     private final String LOG_TAG = Model.class.getSimpleName();
     private Context context;
-    private CryptoInterface.ModelToPresenterScrolling modelToPresenterScrolling;
+    private CryptoInterface.ModelToPresenterHost modelToPresenterHost;
 
     public Model() {
     }
@@ -33,9 +22,9 @@ public class Model {
         this.context = context;
     }
 
-    public void setModelToPresenterScrolling(CryptoInterface.ModelToPresenterScrolling
-                                                    modelToPresenterScrolling) {
-        this.modelToPresenterScrolling = modelToPresenterScrolling;
+    public void setModelToPresenterHost(CryptoInterface.ModelToPresenterHost
+                                                    modelToPresenterHost) {
+        this.modelToPresenterHost = modelToPresenterHost;
     }
 
     public void getCashValue() {
@@ -43,7 +32,7 @@ public class Model {
         AppController.cashReceived = true;
         AppController.cashValueList.put("NGN", 300.0);
         AppController.cashValueList.put("EUR", 30.0);
-        modelToPresenterScrolling.cashReceived("");
+        modelToPresenterHost.cashReceived("");
     }
         //get new List
         /*JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
@@ -95,7 +84,7 @@ public class Model {
                     AppController.cashValueList.put("BRL", brl);
                     AppController.cashValueList.put("LRD", lrd);
                     //all list save, send info to presenter.
-                    modelToPresenterScrolling.cashReceived("");
+                    modelToPresenterHost.cashReceived("");
 
                 }
                 catch (JSONException i){
@@ -103,7 +92,7 @@ public class Model {
                     //if any thing went wrong.
                     AppController.cashReceived = false;
                     AppController.cashValueList.clear();
-                    modelToPresenterScrolling.cashReceived("Error loading, please refresh page");
+                    modelToPresenterHost.cashReceived("Error loading, please refresh page");
                 }
             }
         }, new Response.ErrorListener() {
@@ -117,7 +106,7 @@ public class Model {
                 if(null != networkResponse && null != networkResponse.data){
                     int statusCode = networkResponse.statusCode;
                     String statusError = String.valueOf(networkResponse.data);
-                    modelToPresenterScrolling.cashReceived(statusCode +" and "+ statusError);
+                    modelToPresenterHost.cashReceived(statusCode +" and "+ statusError);
                 }
             }
         }) {

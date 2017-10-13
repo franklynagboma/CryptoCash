@@ -1,4 +1,4 @@
-package com.franklyn.alc.cryptocash.scrolling.pojo;
+package com.franklyn.alc.cryptocash.host.pojo;
 
 /**
  * Created by AGBOMA franklyn on 10/10/17.

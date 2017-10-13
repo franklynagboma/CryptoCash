@@ -6,17 +6,13 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.franklyn.alc.cryptocash.R;
-import com.franklyn.alc.cryptocash.scrolling.pojo.CashValue;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

@@ -4,5 +4,7 @@
     <dimen name="title_size">17sp</dimen>
     <dimen name="select_size">12sp</dimen>
     <dimen name="selector_size">14sp</dimen>
-    <dimen name="arrow_size">15dp</dimen>
+    <dimen name="arrow_size">12dp</dimen>
+    <dimen name="edit_size">20dp</dimen>
+    <dimen name="edit_text">15sp</dimen>
 </resources>

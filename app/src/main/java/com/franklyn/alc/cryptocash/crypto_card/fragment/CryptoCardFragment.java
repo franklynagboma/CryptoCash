@@ -49,6 +49,22 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     public CryptoCardFragment() {
     }
 
+    private SendResponse send;
+    public interface SendResponse{
+        void sendToHostActivity(String cryptoName, String countryName, String cashValue);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            send = (SendResponse) context;
+        }
+        catch (ClassCastException i){
+            throw new ClassCastException(context.toString());
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +72,6 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         isLand = getResources().getBoolean(R.bool.isLand);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -81,6 +93,7 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
 
         customAdapter = new CustomAdapter(
                 context,
+                this,
                 CryptoContract.CardAdded.CONTENT_URI,
                 CryptoContract.CardAdded.PROJECTIONS,
                 CryptoContract.CardAdded.SORT_ORDER);
@@ -111,6 +124,7 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         //reinitialize adapter for new data to be visible to user.
         customAdapter = new CustomAdapter(
                 context,
+                this,
                 CryptoContract.CardAdded.CONTENT_URI,
                 CryptoContract.CardAdded.PROJECTIONS,
                 CryptoContract.CardAdded.SORT_ORDER);
@@ -118,4 +132,9 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         itemList.setAdapter(customAdapter);
     }
 
+    public void getClickedContent(String cryptoName, String countryName, String cashValue){
+        send.sendToHostActivity(cryptoName, countryName, cashValue);
+    }
+
+    public void getDBId(String id){}
 }

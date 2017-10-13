@@ -46,6 +46,6 @@ public class CryptoContract {
                 _ID, CRYPTO_TYPE, COUNTRY_TYPE };
 
         //Sorting type
-        public static final String SORT_ORDER = _ID +" ASC";
+        public static final String SORT_ORDER = _ID +" DESC";
     }
 }

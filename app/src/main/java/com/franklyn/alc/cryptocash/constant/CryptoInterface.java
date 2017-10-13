@@ -1,6 +1,6 @@
 package com.franklyn.alc.cryptocash.constant;
 
-import com.franklyn.alc.cryptocash.scrolling.pojo.CashValue;
+import com.franklyn.alc.cryptocash.host.pojo.CashValue;
 
 import java.util.ArrayList;
 
@@ -10,16 +10,16 @@ import java.util.ArrayList;
 
 public interface CryptoInterface {
 
-    //ScrollingActivity
-    interface ScrollingToPresenter {
+    //HostActivity
+    interface HostToPresenter {
         void getUSDToCountryCash();
     }
-    interface PresenterToScrolling {
+    interface PresenterToHost {
         void sendCashReceived();
         void sendList(ArrayList<CashValue> cashValueList);
         void sendError(String error);
     }
-    interface ModelToPresenterScrolling {
+    interface ModelToPresenterHost {
         void cashReceived(String error);
     }
 }

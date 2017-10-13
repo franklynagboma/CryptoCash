@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.app.AppController;
+import com.franklyn.alc.cryptocash.crypto_card.fragment.CryptoCardFragment;
 import com.franklyn.alc.cryptocash.db_lite.CryptoContract;
 
 import java.util.ArrayList;
@@ -27,12 +28,13 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
     private final String LOG_TAG = CustomAdapter.class.getSimpleName();
     private Context context;
     private Cursor cursor;
-    private ArrayList<String> getIdCount;
+    private CryptoCardFragment cryptoCardFragment;
 
-    public CustomAdapter(Context context, Uri cursorUri, String[] projections, String sortOrder) {
+    public CustomAdapter(Context context, CryptoCardFragment cryptoCardFragment, Uri cursorUri,
+                         String[] projections, String sortOrder) {
         super(null);
         this.context = context;
-        getIdCount = new ArrayList<>();
+        this.cryptoCardFragment = cryptoCardFragment;
         cursor = context.getContentResolver().query(cursorUri, projections, null, null, sortOrder);
         swapCursor(cursor);
     }
@@ -44,7 +46,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
     }
 
     @Override
-    protected void onBindViewHolder(ItemHolder holder, Cursor cursor) {
+    protected void onBindViewHolder(final ItemHolder holder, Cursor cursor) {
 
         //get data ids from database should user want to delete card
         String getId = cursor.getString(cursor.getColumnIndex(CryptoContract.CardAdded._ID));
@@ -55,7 +57,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
         String getCountry = cursor.getString(cursor.getColumnIndex(
                 CryptoContract.CardAdded.COUNTRY_TYPE));
         //add id
-        getIdCount.add(getId);
+        holder.idNo.setText(getId);
 
         //set type face here
 
@@ -79,17 +81,24 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
             }
         }
 
+        //when clicked.
         holder.hostCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(LOG_TAG, "onClicked");
                 //open conversion screen.
+                cryptoCardFragment.getClickedContent(holder.cryptoName.getText().toString(),
+                        holder.countryName.getText().toString(),
+                        holder.countryValue.getText().toString());
             }
         });
+        //when long pressed.
         holder.hostCard.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Log.i(LOG_TAG, "onLongClicked");
+                //return id number
+                cryptoCardFragment.getDBId(holder.idNo.getText().toString());
                 //pop up dialog to delete card and context from database.
                 return true;
             }
@@ -99,12 +108,13 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
     class ItemHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout hostCard;
-        private TextView cryptoNo, cryptoName, countryName, countryValue;
+        private TextView idNo, cryptoNo, cryptoName, countryName, countryValue;
         private ImageView cryptoColour;
 
         public ItemHolder(View itemView) {
             super(itemView);
             hostCard = (RelativeLayout) itemView.findViewById(R.id.host_card);
+            idNo = (TextView) itemView.findViewById(R.id.id_no);
             cryptoNo = (TextView) itemView.findViewById(R.id.crypto_no);
             cryptoName = (TextView) itemView.findViewById(R.id.crypto_name);
             cryptoColour = (ImageView) itemView.findViewById(R.id.crypto_colour);

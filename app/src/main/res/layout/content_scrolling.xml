@@ -7,7 +7,7 @@
     tools:showIn="@layout/activity_scrolling"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.franklyn.alc.cryptocash.scrolling.activity.ScrollingActivity">
+    tools:context="com.franklyn.alc.cryptocash.host.activity.HostActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/items_list"

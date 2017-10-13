@@ -39,7 +39,7 @@ public class AddCardFragment extends DialogFragment implements AdapterView.OnIte
     private ArrayAdapter<String> countryAdpt = null;
     private ArrayList<String> countList = new ArrayList<String>(){{
         add("Select");
-        add("Angolan(Kwanza)");
+        add("Angolan:Kwanza(AOA)");
         add("Argentina:Peso(ARS)");
         add("Australia:Dollar(AUD)");
         add("Belgium:Euro(EUR)");
@@ -92,7 +92,7 @@ public class AddCardFragment extends DialogFragment implements AdapterView.OnIte
     public AddCardFragment() {
     }
 
-    //set up interface to send addCard content to ScrollingActivity
+    //set up interface to send addCard content to HostActivity
     private SendAddContent send;
     public interface SendAddContent{
         void sendContent(String crypto, String country);
@@ -196,7 +196,7 @@ public class AddCardFragment extends DialogFragment implements AdapterView.OnIte
         else if(!radioSelected.isEmpty() && countrySelected.isEmpty())
             toastMsg("Select country type");
         else{
-            //if all condition are met, send to ScrollingActivity
+            //if all condition are met, send to HostActivity
             send.sendContent(radioSelected, countrySelected);
             radioSelected = "";
             countrySelected = "";

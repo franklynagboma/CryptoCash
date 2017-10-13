@@ -1,4 +1,4 @@
-package com.franklyn.alc.cryptocash.scrolling.activity;
+package com.franklyn.alc.cryptocash.host.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,24 +7,27 @@ import android.view.MenuItem;
 
 import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.app.AppController;
+import com.franklyn.alc.cryptocash.calculate.fragment.CalculateFragment;
 import com.franklyn.alc.cryptocash.constant.CryptoInterface;
 import com.franklyn.alc.cryptocash.crypto_card.fragment.CryptoCardFragment;
-import com.franklyn.alc.cryptocash.scrolling.pojo.CashValue;
-import com.franklyn.alc.cryptocash.scrolling.presenter.Presenter;
+import com.franklyn.alc.cryptocash.host.pojo.CashValue;
+import com.franklyn.alc.cryptocash.host.presenter.Presenter;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
 
-public class ScrollingActivity extends AppCompatActivity
-        implements CryptoInterface.PresenterToScrolling{
+public class HostActivity extends AppCompatActivity
+        implements CryptoInterface.PresenterToHost, CryptoCardFragment.SendResponse{
 
 
-    private final String LOG_TAG = ScrollingActivity.class.getSimpleName();
-    private final String FRAGMENT_TAG = "fragment";
+    private final String LOG_TAG = HostActivity.class.getSimpleName();
     private CryptoCardFragment cryptoCardFragment;
-    private CryptoInterface.ScrollingToPresenter scrollingToPresenter;
+    private final String CRYPTO_TAG = "crypto_tag";
+    private CalculateFragment calculateFragment;
+    private final String CALCULATE_TAG = "calculate_tag";
+    private CryptoInterface.HostToPresenter hostToPresenter;
     private Presenter presenter;
 
     @Override
@@ -33,14 +36,15 @@ public class ScrollingActivity extends AppCompatActivity
         setContentView(R.layout.activity_scrolling);
         ButterKnife.bind(this);
         presenter = new Presenter(this, this);
-        setScrollingToPresenter(presenter);
+        setHostToPresenter(presenter);
         cryptoCardFragment = new CryptoCardFragment();
+        calculateFragment = new CalculateFragment();
 
     }
 
-    public void setScrollingToPresenter(CryptoInterface.ScrollingToPresenter
-                                                scrollingToPresenter) {
-        this.scrollingToPresenter = scrollingToPresenter;
+    public void setHostToPresenter(CryptoInterface.HostToPresenter
+                                           hostToPresenter) {
+        this.hostToPresenter = hostToPresenter;
     }
 
 
@@ -82,8 +86,7 @@ public class ScrollingActivity extends AppCompatActivity
     public void sendCashReceived() {
         AppController.getInstance().stopProgress();
         //call fragment to show list
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                cryptoCardFragment, FRAGMENT_TAG).commit();
+        callCryptoFragment();
     }
 
     @Override
@@ -97,5 +100,24 @@ public class ScrollingActivity extends AppCompatActivity
         }*/
         AppController.getInstance().stopProgress();
         AppController.getInstance().toastMsg(this, error);
+        callCryptoFragment();
+    }
+
+    private void callCryptoFragment(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                cryptoCardFragment, CRYPTO_TAG).commit();
+    }
+
+    @Override
+    public void sendToHostActivity(String cryptoName, String countryName, String cashValue) {
+        if(null == getSupportFragmentManager().findFragmentByTag(CALCULATE_TAG)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("crypto", cryptoName);
+            bundle.putString("country", countryName);
+            bundle.putString("cash", cashValue);
+            calculateFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    calculateFragment, CALCULATE_TAG).commit();
+        }
     }
 }
