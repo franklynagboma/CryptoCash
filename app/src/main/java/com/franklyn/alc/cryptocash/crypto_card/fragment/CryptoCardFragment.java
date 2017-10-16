@@ -51,7 +51,8 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
 
     private SendResponse send;
     public interface SendResponse{
-        void sendToHostActivity(String cryptoName, String countryName, String cashValue);
+        void sendToHostActivity(String cryptoName, String countryName,
+                                String cashSymbol, String cashValue);
     }
 
     @Override
@@ -132,8 +133,9 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         itemList.setAdapter(customAdapter);
     }
 
-    public void getClickedContent(String cryptoName, String countryName, String cashValue){
-        send.sendToHostActivity(cryptoName, countryName, cashValue);
+    public void getClickedContent(String cryptoName, String countryName,
+                                  String cashSymbol, String cashValue){
+        send.sendToHostActivity(cryptoName, countryName, cashSymbol, cashValue);
     }
 
     public void getDBId(String id){}

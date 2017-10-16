@@ -6,11 +6,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="3">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2">
-    </RelativeLayout>
+        android:layout_weight="1.2"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/screen_padding">
+            <TextView
+                android:id="@+id/crypto_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_tin"
+                android:text="1"
+                android:textSize="@dimen/display_text"
+                android:layout_toLeftOf="@+id/crypto_name"
+                android:layout_toStartOf="@+id/crypto_name"/>
+            <TextView
+                android:id="@+id/crypto_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_tin"
+                android:textSize="@dimen/display_text"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:paddingRight="5dp"
+                android:paddingEnd="5dp"
+                tools:text="Crypto"/>
+
+            <ImageView
+                android:id="@+id/crypto_colour"
+                android:layout_width="@dimen/display_arrow"
+                android:layout_height="@dimen/display_arrow"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/crypto_name"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/country_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_tin"
+                android:textSize="@dimen/display_text"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/crypto_colour"
+                android:padding="5dp"
+                android:maxLines="1"
+                tools:text="Country"/>
+
+            <TextView
+                android:id="@+id/country_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_tin"
+                android:textSize="@dimen/display_text"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/country_name"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                tools:text="499,000"/>
+        </RelativeLayout>
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,7 +91,7 @@
                     android:id="@+id/rb_coin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/selector_size"
+                    android:textSize="@dimen/select_display"
                     android:textColor="@color/black_tin"
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
@@ -40,7 +101,7 @@
                     android:id="@+id/rb_cash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/selector_size"
+                    android:textSize="@dimen/select_display"
                     android:textColor="@color/black_tin"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
@@ -57,7 +118,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:textAllCaps="false"
-                android:textSize="@dimen/select_size"
+                android:textSize="@dimen/select_display"
                 android:text="To" />
 
             <TextView
@@ -69,7 +130,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:textAllCaps="false"
-                android:textSize="@dimen/select_size"
+                android:textSize="@dimen/select_display"
                 tools:text="NGN" />
         </LinearLayout>
 
@@ -82,9 +143,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingTop="5dp"
                 android:paddingBottom="10dp">
                 <TextView
-                    android:id="@+id/not_selected2"
+                    android:id="@+id/selected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_tin"
@@ -92,13 +154,13 @@
                     android:textSize="@dimen/edit_text"
                     android:background="@drawable/cash_text"
                     android:padding="7dp"
-                    tools:text="NGN" />
+                    android:text="From" />
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edit_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:hint="Convert value"
                     android:textSize="@dimen/edit_text"
                     android:textColor="@color/black_tin"
                     android:inputType="numberDecimal"
@@ -109,9 +171,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/convert"
                     android:textColor="@android:color/white"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/green_button"/>
+                    android:layout_margin="5dp"
+                    android:background="@drawable/not_active"/>
             </LinearLayout>
 
             <LinearLayout
@@ -120,9 +181,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@+id/value"
-                android:paddingTop="10dp">
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp">
                 <TextView
-                    android:id="@+id/selected"
+                    android:id="@+id/not_selected2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_tin"
@@ -130,16 +192,7 @@
                     android:textSize="@dimen/edit_text"
                     android:background="@drawable/cash_text"
                     android:padding="7dp"
-                    tools:text="COIN" />
-                <ImageView
-                    android:id="@+id/crypto_colour"
-                    android:layout_width="@dimen/arrow_size"
-                    android:layout_height="@dimen/arrow_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"/>
+                    android:text="To" />
                 <TextView
                     android:id="@+id/conversion_value"
                     android:layout_width="wrap_content"
@@ -147,6 +200,8 @@
                     android:textColor="@color/black_tin"
                     android:textAllCaps="false"
                     android:textSize="@dimen/edit_text"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:padding="7dp"
                     tools:text="0.999" />
             </LinearLayout>

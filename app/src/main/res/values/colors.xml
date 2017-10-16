@@ -8,4 +8,5 @@
     <color name="black_gone">#26000000</color>
     <color name="btc">#FF9900</color>
     <color name="eth">#1F407A</color>
+    <color name="liteColorPrimary">#339BE466</color>
 </resources>

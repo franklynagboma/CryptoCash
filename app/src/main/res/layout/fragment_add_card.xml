@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/add_card_title"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp">
             <TextView
                 android:id="@+id/select_crypto"
                 android:layout_width="wrap_content"
@@ -43,27 +43,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp">
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp">
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/rb_btc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BTC"
-                    android:textSize="@dimen/selector_size"
+                    android:textSize="@dimen/select_size"
                     android:textColor="@color/black_tin"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     app:buttonTint="@color/colorPrimary" />
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/rb_eth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ETH"
-                    android:textSize="@dimen/selector_size"
+                    android:textSize="@dimen/select_size"
                     android:textColor="@color/black_tin"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     app:buttonTint="@color/colorPrimary"/>
             </RadioGroup>
         </LinearLayout>
@@ -89,8 +90,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/select_to"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
             <TextView
                 android:id="@+id/select_country"
                 android:layout_width="wrap_content"
@@ -103,7 +104,7 @@
 
             <Spinner
                 android:id="@+id/spin_country"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:minWidth="100dp"/>
@@ -115,13 +116,13 @@
             android:layout_height="wrap_content"
             android:text="@string/add"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/selector_size"
+            android:textSize="@dimen/select_size"
             android:textAllCaps="false"
             android:layout_below="@+id/country"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
             android:foreground="?attr/selectableItemBackground"/>
         <TextView
             android:id="@+id/cancel_now"
@@ -129,13 +130,13 @@
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/selector_size"
+            android:textSize="@dimen/select_size"
             android:textAllCaps="false"
             android:layout_below="@+id/country"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
             android:foreground="?attr/selectableItemBackground"/>
 
     </RelativeLayout>

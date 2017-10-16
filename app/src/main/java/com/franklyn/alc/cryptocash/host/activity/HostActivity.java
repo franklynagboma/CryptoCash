@@ -2,6 +2,7 @@ package com.franklyn.alc.cryptocash.host.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +30,11 @@ public class HostActivity extends AppCompatActivity
     private final String CALCULATE_TAG = "calculate_tag";
     private CryptoInterface.HostToPresenter hostToPresenter;
     private Presenter presenter;
+    private String currentFragment ="";
+    private final String CURRENT_FRAGMENT = "";
+    private String cryptoName ="", countryName ="", cashSymbol ="", cashValue ="";
+    private final String CRYPTO_NAME = "crypto", COUNTRY_NAME ="country",
+            CASH_SYMBOL ="symbol", CASH_VALUE ="cash";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +55,38 @@ public class HostActivity extends AppCompatActivity
 
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(CURRENT_FRAGMENT, currentFragment);
+        outState.putString(CRYPTO_NAME, cryptoName);
+        outState.putString(COUNTRY_NAME, countryName);
+        outState.putString(CASH_SYMBOL, cashSymbol);
+        outState.putString(CASH_VALUE, cashValue);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        currentFragment = savedInstanceState.getString(CURRENT_FRAGMENT, "");
+        if(currentFragment.equals(CRYPTO_TAG))
+            callCryptoFragment();
+        if(currentFragment.equals(CALCULATE_TAG)) {
+            cryptoName = savedInstanceState.getString(CRYPTO_NAME, "");
+            countryName = savedInstanceState.getString(COUNTRY_NAME, "");
+            cashSymbol = savedInstanceState.getString(CASH_SYMBOL, "");
+            cashValue = savedInstanceState.getString(CASH_VALUE, "");
+            sendToHostActivity(cryptoName, countryName, cashSymbol, cashValue);
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        //get cashValue list;
-        AppController.getInstance().startProgress("Loading...", this);
-        presenter.getUSDToCountryCash();
+        if(currentFragment.isEmpty()){
+            //get cashValue list;
+            AppController.getInstance().startProgress("Loading...", this);
+            presenter.getUSDToCountryCash();
+        }
     }
 
     @Override
@@ -104,20 +137,42 @@ public class HostActivity extends AppCompatActivity
     }
 
     private void callCryptoFragment(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                cryptoCardFragment, CRYPTO_TAG).commit();
+        if(null == getSupportFragmentManager().findFragmentByTag(CRYPTO_TAG)){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    cryptoCardFragment, CRYPTO_TAG).commit();
+            currentFragment = CRYPTO_TAG;
+        }
     }
 
     @Override
-    public void sendToHostActivity(String cryptoName, String countryName, String cashValue) {
+    public void sendToHostActivity(String cryptoName, String countryName,
+                                   String cashSymbol, String cashValue) {
         if(null == getSupportFragmentManager().findFragmentByTag(CALCULATE_TAG)) {
+            this.cryptoName = cryptoName;
+            this.countryName = countryName;
+            this.cashSymbol = cashSymbol;
+            this.cashValue = cashValue;
             Bundle bundle = new Bundle();
             bundle.putString("crypto", cryptoName);
             bundle.putString("country", countryName);
+            bundle.putString("symbol", cashSymbol);
             bundle.putString("cash", cashValue);
             calculateFragment.setArguments(bundle);
+            Log.i(LOG_TAG, "show calculateFragment");
+            //call calculateFragment
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     calculateFragment, CALCULATE_TAG).commit();
+            currentFragment = CALCULATE_TAG;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        //if calculate fragment was up, show cryptoCardFragment
+        if(currentFragment.equals(CALCULATE_TAG))
+            callCryptoFragment();
+        else
+            this.finish();
     }
 }

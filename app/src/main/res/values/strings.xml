@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CryptoCash</string>
     <string name="add_new_title">Add country cash</string>
-    <string name="select_crypto">Select crypto currency: </string>
-    <string name="select_country">Select country currency: </string>
+    <string name="select_crypto">Crypto currency: </string>
+    <string name="select_country">Country currency: </string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="currency_app_id">2d4dbd65d94b4a90b99c1162f4c33005</string>

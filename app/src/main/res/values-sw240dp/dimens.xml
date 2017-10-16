@@ -3,8 +3,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_size">17sp</dimen>
     <dimen name="select_size">12sp</dimen>
-    <dimen name="selector_size">14sp</dimen>
+    <dimen name="select_display">12sp</dimen>
     <dimen name="arrow_size">12dp</dimen>
+    <dimen name="display_arrow">18dp</dimen>
     <dimen name="edit_size">20dp</dimen>
     <dimen name="edit_text">15sp</dimen>
+    <dimen name="display_text">22sp</dimen>
 </resources>

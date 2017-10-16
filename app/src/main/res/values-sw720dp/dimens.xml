@@ -4,8 +4,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_size">27sp</dimen>
     <dimen name="select_size">20sp</dimen>
-    <dimen name="selector_size">25sp</dimen>
+    <dimen name="select_display">25sp</dimen>
     <dimen name="arrow_size">20dp</dimen>
+    <dimen name="display_arrow">35dp</dimen>
     <dimen name="edit_size">40dp</dimen>
     <dimen name="edit_text">30sp</dimen>
+    <dimen name="display_text">40sp</dimen>
 </resources>

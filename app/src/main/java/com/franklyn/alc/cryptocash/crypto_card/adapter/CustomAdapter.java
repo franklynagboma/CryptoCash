@@ -77,6 +77,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
                         .getAmountFormat(String.valueOf(
                                 AppController.cashValueList.get(keyValue)));
                 holder.countryValue.setText(getAmountWithCommas);
+                holder.cashSymbol.setText(keyValue);
                 break;
             }
         }
@@ -89,6 +90,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
                 //open conversion screen.
                 cryptoCardFragment.getClickedContent(holder.cryptoName.getText().toString(),
                         holder.countryName.getText().toString(),
+                        holder.cashSymbol.getText().toString(),
                         holder.countryValue.getText().toString());
             }
         });
@@ -108,13 +110,14 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
     class ItemHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout hostCard;
-        private TextView idNo, cryptoNo, cryptoName, countryName, countryValue;
+        private TextView idNo, cashSymbol, cryptoNo, cryptoName, countryName, countryValue;
         private ImageView cryptoColour;
 
         public ItemHolder(View itemView) {
             super(itemView);
             hostCard = (RelativeLayout) itemView.findViewById(R.id.host_card);
             idNo = (TextView) itemView.findViewById(R.id.id_no);
+            cashSymbol = (TextView) itemView.findViewById(R.id.cash_symbol);
             cryptoNo = (TextView) itemView.findViewById(R.id.crypto_no);
             cryptoName = (TextView) itemView.findViewById(R.id.crypto_name);
             cryptoColour = (ImageView) itemView.findViewById(R.id.crypto_colour);

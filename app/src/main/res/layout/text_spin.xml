@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:textColor="@color/black_tin"
-    android:textSize="@dimen/selector_size"
+    android:textSize="@dimen/select_size"
     android:padding="4dp"
     android:scrollbars="none"
     android:ellipsize="marquee">
