@@ -22,4 +22,18 @@ public interface CryptoInterface {
     interface ModelToPresenterHost {
         void cashReceived(String error);
     }
+
+    //CalculateFragment
+    interface CalculateToPresenter {
+        void sendCalculateDetails(String selected, String value, String coinType, String cashValue);
+    }
+    interface PresenterToCalculate {
+        void sendResultedValue(String result);
+        void errorMsg(String error);
+    }
+    interface ModelToPresenterCalculate {
+        void resultReceived(String selected, String value, double usdResult,
+                            String coinType, String cashValue);
+        void errorMsg(String error);
+    }
 }

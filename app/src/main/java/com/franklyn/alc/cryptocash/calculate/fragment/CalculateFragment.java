@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.app.AppController;
+import com.franklyn.alc.cryptocash.calculate.presenter.CalculatePresenter;
+import com.franklyn.alc.cryptocash.constant.CryptoInterface;
 import com.franklyn.alc.cryptocash.helper.io.CustomWatcher;
 
 import butterknife.BindView;
@@ -28,10 +30,12 @@ import butterknife.OnClick;
  * Created by AGBOMA franklyn on 10/13/17.
  */
 
-public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
+public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedChangeListener,
+        CryptoInterface.PresenterToCalculate{
 
     private final String LOG_TAG = CalculateFragment.class.getSimpleName();
     private Context context;
+    private CryptoInterface.CalculateToPresenter calculateToPresenter;
     public static boolean checked;
     public static boolean notEmpty;
     private int rgId = -1;
@@ -42,16 +46,12 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     private  String crypto = "", country = "", symbol = "", cash = "";
 
 
-    @BindView(R.id.crypto_no)
-    TextView cryptoNo;
     @BindView(R.id.crypto_name)
     TextView cryptoName;
     @BindView(R.id.crypto_colour)
     ImageView cryptoColour;
     @BindView(R.id.country_name)
     TextView countryName;
-    @BindView(R.id.country_value)
-    TextView countryValue;
 
 
     @BindView(R.id.rg)
@@ -80,6 +80,11 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         super.onCreate(savedInstanceState);
     }
 
+    public void setCalculateToPresenter(CryptoInterface.CalculateToPresenter
+                                                calculateToPresenter) {
+        this.calculateToPresenter = calculateToPresenter;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -87,6 +92,8 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         View calculate = inflater.inflate(R.layout.fragment_calcaulate, container, false);
         ButterKnife.bind(this, calculate);
         context = getActivity();
+
+        calculateToPresenter = new CalculatePresenter(context, this);
 
 
         //get bundles form HostActivity
@@ -112,7 +119,6 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         super.onViewCreated(view, savedInstanceState);
         cryptoName.setText(crypto);
         countryName.setText(country);
-        countryValue.setText(cash);
         if(crypto.equalsIgnoreCase("btc"))
             cryptoColour.setImageResource(R.drawable.ic_btc_arrow);
         else
@@ -133,10 +139,6 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         super.onStop();
         //set screen to initial state to remove any default save state.
         editValue.setText("");
-        notEmpty = false;
-        rbCoin.setChecked(false);
-        rbCash.setChecked(false);
-        checked = false;
     }
 
     @Override
@@ -188,6 +190,9 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     public void OnCovertBtnClicked() {
         if(checked && notEmpty){
             //call api to get value
+            calculateToPresenter.sendCalculateDetails(rgSelected, editValue.getText().toString(),
+                    cryptoName.getText().toString(), cash);
+            AppController.getInstance().startProgress("Converting " +rgSelected +"...", context);
         }
         else if(!checked && !notEmpty) {
             AppController.getInstance().toastMsg(context, "Select conversion type " +
@@ -199,4 +204,24 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         }
     }
 
+
+    /**
+     * result contains the converted values from presenter
+     * @param result
+     */
+    @Override
+    public void sendResultedValue(String result) {
+        AppController.getInstance().stopProgress();
+        conversionValue.setText(result);
+    }
+
+    /**
+     * If any thing goes wrong, user will see error display as toast message.
+     * @param error
+     */
+    @Override
+    public void errorMsg(String error) {
+        AppController.getInstance().stopProgress();
+        AppController.getInstance().toastMsg(context, error);
+    }
 }

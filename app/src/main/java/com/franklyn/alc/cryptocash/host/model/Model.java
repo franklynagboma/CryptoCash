@@ -1,9 +1,20 @@
 package com.franklyn.alc.cryptocash.host.model;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.franklyn.alc.cryptocash.app.AppController;
 import com.franklyn.alc.cryptocash.constant.CryptoInterface;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by AGBOMA franklyn on 10/10/17.
@@ -28,13 +39,15 @@ public class Model {
     }
 
     public void getCashValue() {
-        //just for test now.
+        //just for text
         AppController.cashReceived = true;
         AppController.cashValueList.put("NGN", 300.0);
-        AppController.cashValueList.put("EUR", 30.0);
+        AppController.cashValueList.put("GHS", 200.0);
+        AppController.cashValueList.put("CNY", 500.0);
+        AppController.cashValueList.put("EUR", 700.0);
         modelToPresenterHost.cashReceived("");
-    }
-        //get new List
+
+
         /*JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 AppController.BASE_CASH_API, new Response.Listener<JSONObject>() {
             @Override
@@ -108,6 +121,7 @@ public class Model {
                     String statusError = String.valueOf(networkResponse.data);
                     modelToPresenterHost.cashReceived(statusCode +" and "+ statusError);
                 }
+                modelToPresenterHost.cashReceived("Error loading, please refresh page");
             }
         }) {
 
@@ -121,6 +135,6 @@ public class Model {
 
         request.setRetryPolicy(new DefaultRetryPolicy(10000, 3,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(request, AppController.TAG);
-    }*/
+        AppController.getInstance().addToRequestQueue(request, AppController.TAG);*/
+    }
 }

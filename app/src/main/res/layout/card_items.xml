@@ -26,23 +26,13 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
         <TextView
-            android:id="@+id/crypto_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black_tin"
-            android:text="1"
-            android:textSize="@dimen/select_size"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"/>
-        <TextView
             android:id="@+id/crypto_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_tin"
             android:textSize="@dimen/select_size"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/crypto_no"
-            android:layout_marginBottom="10dp"
+            android:padding="10dp"
             tools:text="Crypto"/>
 
         <ImageView
@@ -51,7 +41,8 @@
             android:layout_height="@dimen/arrow_size"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/crypto_name"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/country_name"
@@ -61,7 +52,7 @@
             android:textSize="@dimen/select_size"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/crypto_colour"
-            android:layout_marginBottom="5dp"
+            android:padding="10dp"
             android:maxLines="1"
             tools:text="Country"/>
 
@@ -74,6 +65,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/country_name"
             android:layout_marginBottom="5dp"
+            android:visibility="gone"
             tools:text="499,000"/>
 
     </RelativeLayout>

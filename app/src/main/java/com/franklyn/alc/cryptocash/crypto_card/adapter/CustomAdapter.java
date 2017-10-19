@@ -73,10 +73,8 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
         //Loop and compare country with list of respective cashValue
         for(String keyValue: AppController.cashValueList.keySet()){
             if(getCountry.toUpperCase().contains(keyValue)){
-                String getAmountWithCommas = AppController.getInstance()
-                        .getAmountFormat(String.valueOf(
-                                AppController.cashValueList.get(keyValue)));
-                holder.countryValue.setText(getAmountWithCommas);
+                holder.countryValue.setText(String.valueOf(
+                        AppController.cashValueList.get(keyValue)));
                 holder.cashSymbol.setText(keyValue);
                 break;
             }
@@ -118,7 +116,6 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
             hostCard = (RelativeLayout) itemView.findViewById(R.id.host_card);
             idNo = (TextView) itemView.findViewById(R.id.id_no);
             cashSymbol = (TextView) itemView.findViewById(R.id.cash_symbol);
-            cryptoNo = (TextView) itemView.findViewById(R.id.crypto_no);
             cryptoName = (TextView) itemView.findViewById(R.id.crypto_name);
             cryptoColour = (ImageView) itemView.findViewById(R.id.crypto_colour);
             countryName = (TextView) itemView.findViewById(R.id.country_name);

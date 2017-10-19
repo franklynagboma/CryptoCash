@@ -16,25 +16,13 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/screen_padding">
             <TextView
-                android:id="@+id/crypto_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black_tin"
-                android:text="1"
-                android:textSize="@dimen/display_text"
-                android:layout_toLeftOf="@+id/crypto_name"
-                android:layout_toStartOf="@+id/crypto_name"/>
-            <TextView
                 android:id="@+id/crypto_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_tin"
                 android:textSize="@dimen/display_text"
                 android:layout_centerHorizontal="true"
-                android:paddingLeft="5dp"
-                android:paddingStart="5dp"
-                android:paddingRight="5dp"
-                android:paddingEnd="5dp"
+                android:padding="5dp"
                 tools:text="Crypto"/>
 
             <ImageView
@@ -57,18 +45,6 @@
                 android:padding="5dp"
                 android:maxLines="1"
                 tools:text="Country"/>
-
-            <TextView
-                android:id="@+id/country_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black_tin"
-                android:textSize="@dimen/display_text"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/country_name"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                tools:text="499,000"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -138,42 +114,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
-            <LinearLayout
-                android:id="@+id/value"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:id="@+id/value"
                 android:paddingTop="5dp"
-                android:paddingBottom="10dp">
-                <TextView
-                    android:id="@+id/selected"
-                    android:layout_width="wrap_content"
+                android:paddingBottom="15dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black_tin"
-                    android:textAllCaps="false"
-                    android:textSize="@dimen/edit_text"
-                    android:background="@drawable/cash_text"
-                    android:padding="7dp"
-                    android:text="From" />
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edit_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/edit_text"
-                    android:textColor="@color/black_tin"
-                    android:inputType="numberDecimal"
-                    android:digits="0123456789."/>
-                <Button
-                    android:id="@+id/convert_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/convert"
-                    android:textColor="@android:color/white"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/not_active"/>
-            </LinearLayout>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black_tin"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/edit_text"
+                        android:background="@drawable/cash_text"
+                        android:padding="7dp"
+                        android:text="From" />
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edit_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textSize="@dimen/edit_text"
+                        android:textColor="@color/black_tin"
+                        android:inputType="numberDecimal"
+                        android:digits="0123456789."
+                        android:imeOptions="actionDone"/>
+                    <Button
+                        android:id="@+id/convert_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/convert"
+                        android:textColor="@android:color/white"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/not_active"/>
+                </LinearLayout>
+            </ScrollView>
 
             <LinearLayout
                 android:id="@+id/result"

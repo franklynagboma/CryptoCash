@@ -4,8 +4,10 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.icu.text.DecimalFormat;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -136,16 +138,25 @@ public class AppController extends Application {
      * @param amount
      * @return
      */
-    public String getAmountFormat(String amount) {
+    public String getAmountFormat(String amount, boolean coin) {
         String newAmount = "";
         if(!amount.isEmpty()){
             try {
+                Log.i(LOG_TAG, "amount: " +amount);
+                double decimal = Double.parseDouble(amount);
+                // if BTC or ETH reduce to 12 decimal, else if cash value reduce to 2 decimal
+                if(coin)
+                    amount = String.format("%.12f", decimal);
+                else
+                    amount = String.format("%.2f", decimal);
+
+                Log.i(LOG_TAG, "amount truc: " +amount);
+
                 String[] checkDot = amount.split("\\.");
                 if(checkDot.length >1) {
                     newAmount = String.format("%,d", Long.parseLong(checkDot[0]));
-                    if(checkDot[1].length() >3)
-                        checkDot[1] = checkDot[1].substring(0,2);//3 decimal place.
-                    newAmount = newAmount +"."+ checkDot[1];
+                    if(checkDot[1].length() >0)
+                        newAmount = newAmount +"."+ checkDot[1];
                 }
                 else
                     newAmount = String.format("%,d", Long.parseLong(amount));
