@@ -43,8 +43,18 @@ public class CalculatePresenter implements CryptoInterface.CalculateToPresenter,
      * @param cashValue = cash representation to dollar(USD) as got from API
      */
     @Override
-    public void sendCalculateDetails(String selected, String value, String coinType, String cashValue) {
-        model.getConversion(selected, coinType, value, cashValue);
+    public void sendCalculateDetails(String selected,  String notSelected,
+                                     String value, String coinType, String cashValue) {
+        if(selected.equals("?") || notSelected.equals("?")){
+            //if cash for country was not retrieved from Api call
+            //or BTC/ETH is not available, do this.
+            Log.i(LOG_TAG, "Not selected here: " +notSelected);
+            presenterToCalculate.sendResultedValue("0.00");
+        }
+        else {
+            //other wise do this.
+            model.getConversion(selected, coinType, value, cashValue);
+        }
     }
 
     @Override

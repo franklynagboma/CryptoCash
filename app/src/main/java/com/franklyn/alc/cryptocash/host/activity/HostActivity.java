@@ -2,6 +2,7 @@ package com.franklyn.alc.cryptocash.host.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import com.franklyn.alc.cryptocash.host.presenter.Presenter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -36,11 +38,16 @@ public class HostActivity extends AppCompatActivity
     private final String CRYPTO_NAME = "crypto", COUNTRY_NAME ="country",
             CASH_SYMBOL ="symbol", CASH_VALUE ="cash";
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         presenter = new Presenter(this, this);
         setHostToPresenter(presenter);
         cryptoCardFragment = new CryptoCardFragment();
@@ -104,8 +111,14 @@ public class HostActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if(id == android.R.id.home){
+            onBackPressed();
+        }
+        if (id == R.id.action_refresh) {
+            if(currentFragment.equals(CRYPTO_TAG))
+                Log.i(LOG_TAG, "refresh");
+            else
+                Log.i(LOG_TAG, "refresh and call cryto");
         }
         return super.onOptionsItemSelected(item);
     }

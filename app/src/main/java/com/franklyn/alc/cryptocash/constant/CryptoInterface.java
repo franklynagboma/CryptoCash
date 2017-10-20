@@ -25,7 +25,8 @@ public interface CryptoInterface {
 
     //CalculateFragment
     interface CalculateToPresenter {
-        void sendCalculateDetails(String selected, String value, String coinType, String cashValue);
+        void sendCalculateDetails(String selected, String notSelected,
+                                  String value, String coinType, String cashValue);
     }
     interface PresenterToCalculate {
         void sendResultedValue(String result);

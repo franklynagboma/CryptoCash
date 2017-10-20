@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -46,6 +47,8 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     private  String crypto = "", country = "", symbol = "", cash = "";
 
 
+    @BindView(R.id.crypto_ic)
+    ImageView cryptoIc;
     @BindView(R.id.crypto_name)
     TextView cryptoName;
     @BindView(R.id.crypto_colour)
@@ -94,6 +97,7 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         context = getActivity();
 
         calculateToPresenter = new CalculatePresenter(context, this);
+        setCalculateToPresenter(calculateToPresenter);
 
 
         //get bundles form HostActivity
@@ -119,10 +123,14 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         super.onViewCreated(view, savedInstanceState);
         cryptoName.setText(crypto);
         countryName.setText(country);
-        if(crypto.equalsIgnoreCase("btc"))
+        if(crypto.equalsIgnoreCase("btc")) {
+            cryptoIc.setImageResource(R.drawable.ic_btc);
             cryptoColour.setImageResource(R.drawable.ic_btc_arrow);
-        else
+        }
+        else {
+            cryptoIc.setImageResource(R.drawable.ic_eth);
             cryptoColour.setImageResource(R.drawable.ic_eth_arrow);
+        }
 
         rbCoin.setText(crypto);
         rbCash.setText(symbol);
@@ -190,9 +198,9 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     public void OnCovertBtnClicked() {
         if(checked && notEmpty){
             //call api to get value
-            calculateToPresenter.sendCalculateDetails(rgSelected, editValue.getText().toString(),
-                    cryptoName.getText().toString(), cash);
             AppController.getInstance().startProgress("Converting " +rgSelected +"...", context);
+            calculateToPresenter.sendCalculateDetails(rgSelected, rgNotSelected,
+                    editValue.getText().toString(), cryptoName.getText().toString(), cash);
         }
         else if(!checked && !notEmpty) {
             AppController.getInstance().toastMsg(context, "Select conversion type " +
@@ -211,8 +219,8 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
      */
     @Override
     public void sendResultedValue(String result) {
-        AppController.getInstance().stopProgress();
         conversionValue.setText(result);
+        AppController.getInstance().stopProgress();
     }
 
     /**

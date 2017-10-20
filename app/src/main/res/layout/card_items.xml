@@ -25,22 +25,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
-        <TextView
-            android:id="@+id/crypto_name"
+        <RelativeLayout
+            android:id="@+id/crypto_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_tin"
-            android:textSize="@dimen/select_size"
-            android:layout_centerHorizontal="true"
-            android:padding="10dp"
-            tools:text="Crypto"/>
+            android:layout_centerHorizontal="true">
+            <ImageView
+                android:id="@+id/ic_crypto"
+                android:layout_width="@dimen/arrow_size"
+                android:layout_height="@dimen/arrow_size"
+                android:layout_marginTop="10dp"
+                android:padding="2dp"/>
+            <TextView
+                android:id="@+id/crypto_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_tin"
+                android:textSize="@dimen/select_size"
+                android:padding="10dp"
+                tools:text="Crypto"/>
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/crypto_colour"
             android:layout_width="@dimen/arrow_size"
             android:layout_height="@dimen/arrow_size"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/crypto_name"
+            android:layout_below="@id/crypto_layout"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
 

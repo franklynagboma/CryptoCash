@@ -65,19 +65,39 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
         holder.cryptoName.setText(getCrypto);
         holder.countryName.setText(getCountry);
 
-        if(getCrypto.equalsIgnoreCase("btc"))
+        if(getCrypto.equalsIgnoreCase("btc")) {
+            holder.cryptoIc.setImageResource(R.drawable.ic_btc);
             holder.cryptoColour.setImageResource(R.drawable.ic_btc_arrow);
-        if(getCrypto.equalsIgnoreCase("eth"))
+        }
+        if(getCrypto.equalsIgnoreCase("eth")) {
+            holder.cryptoIc.setImageResource(R.drawable.ic_eth);
             holder.cryptoColour.setImageResource(R.drawable.ic_eth_arrow);
+        }
 
         //Loop and compare country with list of respective cashValue
-        for(String keyValue: AppController.cashValueList.keySet()){
-            if(getCountry.toUpperCase().contains(keyValue)){
-                holder.countryValue.setText(String.valueOf(
-                        AppController.cashValueList.get(keyValue)));
-                holder.cashSymbol.setText(keyValue);
-                break;
+        String getKeyValue = "";
+        try {
+            for(String keyValue: AppController.cashValueList.keySet()){
+                if(getCountry.toUpperCase().contains(keyValue)){
+                    getKeyValue = String.valueOf(AppController.cashValueList.get(keyValue));
+                    holder.countryValue.setText(getKeyValue);
+                    holder.cashSymbol.setText(keyValue);
+                    break;
+                }
+                else {
+                    if(getKeyValue.isEmpty()) {
+                        getKeyValue = "0";
+                        holder.countryValue.setText(getKeyValue);
+                        holder.cashSymbol.setText("?");
+                    }
+                }
             }
+        }
+        catch (Exception i){
+            i.printStackTrace();
+            getKeyValue = "0";
+            holder.countryValue.setText(getKeyValue);
+            holder.cashSymbol.setText("?");
         }
 
         //when clicked.
@@ -109,7 +129,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
 
         private RelativeLayout hostCard;
         private TextView idNo, cashSymbol, cryptoNo, cryptoName, countryName, countryValue;
-        private ImageView cryptoColour;
+        private ImageView cryptoIc, cryptoColour;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -117,6 +137,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
             idNo = (TextView) itemView.findViewById(R.id.id_no);
             cashSymbol = (TextView) itemView.findViewById(R.id.cash_symbol);
             cryptoName = (TextView) itemView.findViewById(R.id.crypto_name);
+            cryptoIc = (ImageView) itemView.findViewById(R.id.ic_crypto);
             cryptoColour = (ImageView) itemView.findViewById(R.id.crypto_colour);
             countryName = (TextView) itemView.findViewById(R.id.country_name);
             countryValue = (TextView) itemView.findViewById(R.id.country_value);
