@@ -51,8 +51,10 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     ImageView cryptoIc;
     @BindView(R.id.crypto_name)
     TextView cryptoName;
-    @BindView(R.id.crypto_colour)
-    ImageView cryptoColour;
+    @BindView(R.id.crypto_colour_up)
+    ImageView cryptoColourUp;
+    @BindView(R.id.crypto_colour_down)
+    ImageView cryptoColourDown;
     @BindView(R.id.country_name)
     TextView countryName;
 
@@ -121,15 +123,30 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        cryptoName.setTypeface(AppController.getSegoeSmallBold(context));
+        countryName.setTypeface(AppController.getSegoeSmallBold(context));
+        rbCoin.setTypeface(AppController.getSegoeNormal(context));
+        rbCash.setTypeface(AppController.getSegoeNormal(context));
+        selected.setTypeface(AppController.getSegoeNormal(context));
+        notSelected.setTypeface(AppController.getSegoeNormal(context));
+        notSelected2.setTypeface(AppController.getSegoeNormal(context));
+        editValue.setTypeface(AppController.getSegoeNormal(context));
+        convertBtn.setTypeface(AppController.getSegoeNormal(context));
+        conversionValue.setTypeface(AppController.getSegoeNormal(context));
+
+
         cryptoName.setText(crypto);
         countryName.setText(country);
         if(crypto.equalsIgnoreCase("btc")) {
             cryptoIc.setImageResource(R.drawable.ic_btc);
-            cryptoColour.setImageResource(R.drawable.ic_btc_arrow);
+            cryptoColourUp.setImageResource(R.drawable.ic_btc_up);
+            cryptoColourDown.setImageResource(R.drawable.ic_btc_arrow);
         }
         else {
             cryptoIc.setImageResource(R.drawable.ic_eth);
-            cryptoColour.setImageResource(R.drawable.ic_eth_arrow);
+            cryptoColourUp.setImageResource(R.drawable.ic_eth_up);
+            cryptoColourDown.setImageResource(R.drawable.ic_eth_arrow);
         }
 
         rbCoin.setText(crypto);

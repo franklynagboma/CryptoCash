@@ -196,8 +196,10 @@ public class AddCardFragment extends DialogFragment implements AdapterView.OnIte
         else if(!radioSelected.isEmpty() && countrySelected.isEmpty())
             toastMsg("Select country type");
         else{
+            //interface on try should it be screen rotates while fragment is showing.
             //if all condition are met, send to HostActivity
-            send.sendContent(radioSelected, countrySelected);
+            if(null != send)
+                send.sendContent(radioSelected, countrySelected);
             radioSelected = "";
             countrySelected = "";
             getDialog().dismiss();

@@ -1,5 +1,5 @@
 <resources>
-    <dimen name="app_bar_height">250dp</dimen>
+    <dimen name="app_bar_height">260dp</dimen>
     <dimen name="screen_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_size">24sp</dimen>
@@ -10,4 +10,5 @@
     <dimen name="edit_size">35dp</dimen>
     <dimen name="edit_text">28sp</dimen>
     <dimen name="display_text">35sp</dimen>
+    <dimen name="btn">30sp</dimen>
 </resources>

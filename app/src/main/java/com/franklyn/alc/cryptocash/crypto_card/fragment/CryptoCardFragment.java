@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.add_card.AddCardFragment;
+import com.franklyn.alc.cryptocash.app.AppController;
 import com.franklyn.alc.cryptocash.crypto_card.adapter.CustomAdapter;
 import com.franklyn.alc.cryptocash.db_lite.CryptoContract;
 
@@ -36,11 +38,9 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     private AddCardFragment addCardFragment;
     private final String ADD_CARD = "add_card_fragment";
     private boolean isTab, isLand;
-    private static ArrayList<String> getIdCount;
     private CustomAdapter customAdapter;
-    private String[] columns = {
-            CryptoContract.CardAddedColumn.CRYPTO_TYPE,
-            CryptoContract.CardAddedColumn.COUNTRY_TYPE };
+    @BindView(R.id.app_name)
+    TextView appName;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.items_list)
@@ -82,14 +82,16 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         ButterKnife.bind(this, cardItems);
 
         context = getActivity();
+        appName.setTypeface(AppController.getSegoeBold(context));
+
         itemList.setHasFixedSize(true);
         if(!isTab)
             itemList.setLayoutManager(new GridLayoutManager(context, 2));
         else {
-            if(isLand)
+            if(!isLand)
                 itemList.setLayoutManager(new GridLayoutManager(context, 3));
             else
-                itemList.setLayoutManager(new GridLayoutManager(context, 5));
+                itemList.setLayoutManager(new GridLayoutManager(context, 4));
         }
 
         customAdapter = new CustomAdapter(
@@ -107,6 +109,7 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         return cardItems;
 
     }
+
 
     @OnClick(R.id.fab)
     public void onFabClicked(){

@@ -105,7 +105,8 @@ public class Model {
                     //if any thing went wrong.
                     AppController.cashReceived = false;
                     AppController.cashValueList.clear();
-                    modelToPresenterHost.cashReceived("Error loading, please refresh page");
+                    modelToPresenterHost.cashReceived("Error loading, " +
+                            "check your connection and refresh page");
                 }
             }
         }, new Response.ErrorListener() {
@@ -121,7 +122,8 @@ public class Model {
                     String statusError = String.valueOf(networkResponse.data);
                     modelToPresenterHost.cashReceived(statusCode +" and "+ statusError);
                 }
-                modelToPresenterHost.cashReceived("Error loading, please refresh page");
+                modelToPresenterHost.cashReceived("Error loading, " +
+                        "check your connection and refresh page");
             }
         }) {
 

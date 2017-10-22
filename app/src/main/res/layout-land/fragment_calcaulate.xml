@@ -8,14 +8,14 @@
     android:fitsSystemWindows="true"
     tools:context="com.franklyn.alc.cryptocash.host.activity.HostActivity">
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:weightSum="3">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.195"
             android:gravity="center">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -78,10 +78,16 @@
             </RelativeLayout>
         </LinearLayout>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/black_gone"
+            android:layout_weight="0.005"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1.8"
+            android:gravity="center"
             android:padding="@dimen/screen_padding">
             <LinearLayout
                 android:layout_width="match_parent"

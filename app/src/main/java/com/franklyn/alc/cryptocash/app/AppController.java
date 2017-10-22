@@ -3,6 +3,7 @@ package com.franklyn.alc.cryptocash.app;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.icu.text.DecimalFormat;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.franklyn.alc.cryptocash.connection.ConnectionReceiver;
 
 import java.util.HashMap;
 
@@ -61,6 +63,8 @@ public class AppController extends Application {
         super.onCreate();
         instance = this;
         cashValueList = new HashMap<>();
+        //initialize connection receiver
+        new ConnectionReceiver().onReceive(getInstance(), new Intent());
 
     }
 

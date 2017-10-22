@@ -46,14 +46,25 @@
                 tools:text="Crypto"/>
         </RelativeLayout>
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/crypto_colour"
-            android:layout_width="@dimen/arrow_size"
-            android:layout_height="@dimen/arrow_size"
-            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_below="@id/crypto_layout"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp">
+            <ImageView
+                android:id="@+id/crypto_colour_up"
+                android:layout_width="@dimen/arrow_size"
+                android:layout_height="@dimen/arrow_size" />
+            <ImageView
+                android:id="@+id/crypto_colour_down"
+                android:layout_width="@dimen/arrow_size"
+                android:layout_height="@dimen/arrow_size"
+                android:layout_marginTop="4dp"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/country_name"

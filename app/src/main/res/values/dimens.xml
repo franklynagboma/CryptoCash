@@ -10,4 +10,5 @@
     <dimen name="edit_size">20dp</dimen>
     <dimen name="edit_text">15sp</dimen>
     <dimen name="display_text">20sp</dimen>
+    <dimen name="btn">18sp</dimen>
 </resources>

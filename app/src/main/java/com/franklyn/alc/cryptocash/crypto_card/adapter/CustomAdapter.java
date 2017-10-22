@@ -60,18 +60,21 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
         holder.idNo.setText(getId);
 
         //set type face here
-
+        holder.cryptoName.setTypeface(AppController.getSegoeSmallBold(context));
+        holder.countryName.setTypeface(AppController.getSegoeSmallBold(context));
         //crypto and country name.
         holder.cryptoName.setText(getCrypto);
         holder.countryName.setText(getCountry);
 
         if(getCrypto.equalsIgnoreCase("btc")) {
             holder.cryptoIc.setImageResource(R.drawable.ic_btc);
-            holder.cryptoColour.setImageResource(R.drawable.ic_btc_arrow);
+            holder.cryptoColourUp.setImageResource(R.drawable.ic_btc_up);
+            holder.cryptoColourDown.setImageResource(R.drawable.ic_btc_arrow);
         }
         if(getCrypto.equalsIgnoreCase("eth")) {
             holder.cryptoIc.setImageResource(R.drawable.ic_eth);
-            holder.cryptoColour.setImageResource(R.drawable.ic_eth_arrow);
+            holder.cryptoColourUp.setImageResource(R.drawable.ic_eth_up);
+            holder.cryptoColourDown.setImageResource(R.drawable.ic_eth_arrow);
         }
 
         //Loop and compare country with list of respective cashValue
@@ -129,7 +132,7 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
 
         private RelativeLayout hostCard;
         private TextView idNo, cashSymbol, cryptoNo, cryptoName, countryName, countryValue;
-        private ImageView cryptoIc, cryptoColour;
+        private ImageView cryptoIc, cryptoColourUp, cryptoColourDown;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -138,7 +141,8 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
             cashSymbol = (TextView) itemView.findViewById(R.id.cash_symbol);
             cryptoName = (TextView) itemView.findViewById(R.id.crypto_name);
             cryptoIc = (ImageView) itemView.findViewById(R.id.ic_crypto);
-            cryptoColour = (ImageView) itemView.findViewById(R.id.crypto_colour);
+            cryptoColourUp = (ImageView) itemView.findViewById(R.id.crypto_colour_up);
+            cryptoColourDown = (ImageView) itemView.findViewById(R.id.crypto_colour_down);
             countryName = (TextView) itemView.findViewById(R.id.country_name);
             countryValue = (TextView) itemView.findViewById(R.id.country_value);
         }
