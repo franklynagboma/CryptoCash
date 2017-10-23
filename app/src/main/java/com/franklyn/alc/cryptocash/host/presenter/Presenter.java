@@ -45,6 +45,10 @@ public class Presenter implements CryptoInterface.HostToPresenter,
             cashReceived("");
     }
 
+    /**
+     * error contains string of error result got from cash value API
+     * @param error
+     */
     @Override
     public void cashReceived(String error) {
         //save all cash equivalent to 1 USD

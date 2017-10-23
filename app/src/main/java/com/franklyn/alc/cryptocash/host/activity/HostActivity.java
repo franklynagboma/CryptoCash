@@ -2,6 +2,7 @@ package com.franklyn.alc.cryptocash.host.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -90,9 +91,11 @@ public class HostActivity extends AppCompatActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         currentFragment = savedInstanceState.getString(CURRENT_FRAGMENT, "");
+
+        Log.i(LOG_TAG, "currentFragment: " +currentFragment);
         if(currentFragment.equals(CRYPTO_TAG))
             callCryptoFragment();
-        if(currentFragment.equals(CALCULATE_TAG)) {
+        else if(currentFragment.equals(CALCULATE_TAG)) {
             cryptoName = savedInstanceState.getString(CRYPTO_NAME, "");
             countryName = savedInstanceState.getString(COUNTRY_NAME, "");
             cashSymbol = savedInstanceState.getString(CASH_SYMBOL, "");
@@ -105,13 +108,19 @@ public class HostActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(!currentFragment.equals(CRYPTO_TAG)){
+        Log.i(LOG_TAG , "onResume");
+        if(currentFragment.isEmpty() || currentFragment.equals(CRYPTO_TAG)){
             //get cashValue list;
             AppController.getInstance().startProgress("Loading...", this);
             presenter.getUSDToCountryCash();
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AppController.getInstance().stopProgress();
+    }
 
     private void showConnectionDialog() {
         View settings = LayoutInflater.from(this).inflate(R.layout.settings_dialog, null, false);
@@ -147,6 +156,12 @@ public class HostActivity extends AppCompatActivity
         build.show();
     }
 
+    private void stopDialog() {
+        //if phone is connected to internet and cash value was successful or app destroys.
+        if(null != build && build.isShowing())
+            build.dismiss();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -172,10 +187,10 @@ public class HostActivity extends AppCompatActivity
             onBackPressed();
         }
         if (id == R.id.action_refresh) {
+            //if AppController.cashReceived if false, cash value API was not retrieved successfully.
             if(!AppController.cashReceived) {
-                //if connection is Okay, as user to check connection and refresh
-                //else ask user to turn on internet connection.
-                //call onResume to get Cash API and load Fragment
+                //if connection is Okay,but could not get  cash value from API for
+                //some reason, call onResume to get cash value from API and load Fragment
                 onResume();
             }
         }
@@ -185,12 +200,13 @@ public class HostActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != build && build.isShowing())
-            build.dismiss();
+        AppController.getInstance().stopProgress();
+        stopDialog();
     }
 
     @Override
     public void sendCashReceived() {
+        stopDialog();
         AppController.getInstance().stopProgress();
         //call fragment to show list
         callCryptoFragment();
@@ -213,6 +229,7 @@ public class HostActivity extends AppCompatActivity
         if(null == getSupportFragmentManager().findFragmentByTag(CRYPTO_TAG)){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     cryptoCardFragment, CRYPTO_TAG).commit();
+            Log.i(LOG_TAG, "recreate: ");
             currentFragment = CRYPTO_TAG;
             if(null != menuItem)
                 menuItem.setVisible(true);
@@ -244,6 +261,23 @@ public class HostActivity extends AppCompatActivity
     }
 
     @Override
+    public void reloadFragment(String id) {
+        if(!id.isEmpty()) {
+            //id not empty, then a card has being deleted.
+            //Remove fragment
+            getSupportFragmentManager().beginTransaction().remove(cryptoCardFragment).commit();
+            //delay a little to completely remove fragment.
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //Recreate fragment.
+                    callCryptoFragment();
+                }
+            }, 50);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         //super.onBackPressed();
         //if calculate fragment was up, show cryptoCardFragment
@@ -258,8 +292,6 @@ public class HostActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == NETWORK_CODE && resultCode == RESULT_OK) {
             //call onResume to get Cash API and load Fragment
-
-            Log.i(LOG_TAG, "status is okay");
             onResume();
         }
         else {

@@ -121,7 +121,8 @@ public class CustomAdapter extends RecyclerViewCursorAdapter<CustomAdapter.ItemH
             public boolean onLongClick(View v) {
                 Log.i(LOG_TAG, "onLongClicked");
                 //return id number
-                cryptoCardFragment.getDBId(holder.idNo.getText().toString());
+                cryptoCardFragment.getDBId(holder.idNo.getText().toString(),
+                        holder.countryName.getText().toString());
                 //pop up dialog to delete card and context from database.
                 return true;
             }

@@ -58,7 +58,8 @@ public class CalculateModel {
                         }
                         catch (JSONException i){
                             i.printStackTrace();
-                            modelToPresenterCalculate.errorMsg("Error getting value");
+                            //if any thing went wrong.
+                            modelToPresenterCalculate.errorMsg("Error getting result, retry");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -66,12 +67,6 @@ public class CalculateModel {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e(LOG_TAG, "Error: " +error.getMessage());
                 //if any thing went wrong.
-                NetworkResponse networkResponse = error.networkResponse;
-                if(null != networkResponse && null != networkResponse.data){
-                    int statusCode = networkResponse.statusCode;
-                    String statusError = String.valueOf(networkResponse.data);
-                    modelToPresenterCalculate.errorMsg(statusCode +" and "+ statusError);
-                }
                 modelToPresenterCalculate.errorMsg("Error, Please retry");
             }
         }) {

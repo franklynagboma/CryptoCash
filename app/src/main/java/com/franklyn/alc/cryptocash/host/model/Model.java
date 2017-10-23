@@ -39,13 +39,6 @@ public class Model {
     }
 
     public void getCashValue() {
-        //just for text
-        /*AppController.cashReceived = true;
-        AppController.cashValueList.put("NGN", 300.0);
-        AppController.cashValueList.put("GHS", 200.0);
-        AppController.cashValueList.put("CNY", 500.0);
-        AppController.cashValueList.put("EUR", 700.0);
-        modelToPresenterHost.cashReceived("");*/
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 AppController.BASE_CASH_API, new Response.Listener<JSONObject>() {
@@ -105,7 +98,7 @@ public class Model {
                     AppController.cashReceived = false;
                     AppController.cashValueList.clear();
                     modelToPresenterHost.cashReceived("Error loading, " +
-                            "check your connection and refresh page");
+                            "check your connection or refresh page");
                 }
             }
         }, new Response.ErrorListener() {
@@ -115,14 +108,8 @@ public class Model {
                 //if any thing went wrong.
                 AppController.cashReceived = false;
                 AppController.cashValueList.clear();
-                NetworkResponse networkResponse = error.networkResponse;
-                if(null != networkResponse && null != networkResponse.data){
-                    int statusCode = networkResponse.statusCode;
-                    String statusError = String.valueOf(networkResponse.data);
-                    modelToPresenterHost.cashReceived(statusCode +" and "+ statusError);
-                }
                 modelToPresenterHost.cashReceived("Error loading, " +
-                        "check your connection and refresh page");
+                        "check your connection or refresh page");
             }
         }) {
 

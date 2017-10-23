@@ -2,7 +2,11 @@ package com.franklyn.alc.cryptocash.crypto_card.fragment;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -14,11 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.franklyn.alc.cryptocash.R;
 import com.franklyn.alc.cryptocash.add_card.AddCardFragment;
 import com.franklyn.alc.cryptocash.app.AppController;
 import com.franklyn.alc.cryptocash.crypto_card.adapter.CustomAdapter;
 import com.franklyn.alc.cryptocash.db_lite.CryptoContract;
+import com.franklyn.alc.cryptocash.host.activity.HostActivity;
 
 import java.util.ArrayList;
 
@@ -39,6 +46,7 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     private final String ADD_CARD = "add_card_fragment";
     private boolean isTab, isLand;
     private CustomAdapter customAdapter;
+    private MaterialDialog build;
     /*@BindView(R.id.app_name)
     TextView appName;*/
     @BindView(R.id.fab)
@@ -53,6 +61,7 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     public interface SendResponse{
         void sendToHostActivity(String cryptoName, String countryName,
                                 String cashSymbol, String cashValue);
+        void reloadFragment(String id);
     }
 
     @Override
@@ -141,5 +150,69 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         send.sendToHostActivity(cryptoName, countryName, cashSymbol, cashValue);
     }
 
-    public void getDBId(String id){}
+    /**
+     * delete id content from DB and refresh fragment.
+     * @param id
+     */
+    public void getDBId(final String id, String countryName){
+
+        //show dialog prompt to delete card value
+        View settings = LayoutInflater.from(context).inflate(R.layout.settings_dialog, null, false);
+        TextView settingsTxt = (TextView) settings.findViewById(R.id.settings);
+        settingsTxt.setText("Delete " +countryName+ " card?");
+        settingsTxt.setTypeface(AppController.getSegoeNormal(context));
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.autoDismiss(true)
+                .customView(settings, true)
+                .backgroundColorRes(R.color.item_color);
+        builder.positiveText("Delete")
+                .positiveColorRes(R.color.colorPrimaryDark)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog,
+                                        @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        //if delete granted, perform below.
+                        try {
+                            Cursor getIdValue = context.getContentResolver()
+                                    .query(CryptoContract.CardAdded.CONTENT_URI,
+                                            CryptoContract.CardAdded.PROJECTIONS,
+                                            CryptoContract.CardAdded._ID +"=?",
+                                            new String[] {id},
+                                            CryptoContract.CardAdded.SORT_ORDER);
+
+                            if(null != getIdValue){
+                                getIdValue.moveToFirst();
+
+                                context.getContentResolver()
+                                        .delete(CryptoContract.CardAdded.CONTENT_URI,
+                                                CryptoContract.CardAdded._ID +"=?",
+                                                new String[] {id});
+
+                                customAdapter.notifyDataSetChanged();
+                                send.reloadFragment(id);
+                            }
+                            getIdValue.close();
+                        }
+                        catch (Exception i){
+                            i.printStackTrace();
+                        }
+                    }
+                });
+        builder.negativeText("Cancel")
+                .negativeColorRes(R.color.colorPrimary)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                });
+        build = builder.build();
+        build.setCanceledOnTouchOutside(true);
+        build.show();
+
+    }
+
+
 }

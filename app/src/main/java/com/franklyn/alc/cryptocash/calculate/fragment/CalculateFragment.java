@@ -162,6 +162,7 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     @Override
     public void onStop() {
         super.onStop();
+        AppController.getInstance().stopProgress();
         //set screen to initial state to remove any default save state.
         editValue.setText("");
     }
