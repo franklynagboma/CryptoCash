@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.franklyn.alc.cryptocash.R;
+import com.franklyn.alc.cryptocash.app.AppController;
 
 import java.util.ArrayList;
 
@@ -119,6 +120,15 @@ public class AddCardFragment extends DialogFragment implements AdapterView.OnIte
         getDialog().setCancelable(false);
 
         context = getActivity();
+
+        addTitle.setTypeface(AppController.getSegoeSmallBold(context));
+        selectCrypto.setTypeface(AppController.getSegoeNormal(context));
+        selectCountry.setTypeface(AppController.getSegoeNormal(context));
+        selectTo.setTypeface(AppController.getSegoeNormal(context));
+        rbBtc.setTypeface(AppController.getSegoeNormal(context));
+        rbEth.setTypeface(AppController.getSegoeNormal(context));
+        cancelNow.setTypeface(AppController.getSegoeNormal(context));
+        addNow.setTypeface(AppController.getSegoeNormal(context));
 
         countryAdpt = new ArrayAdapter<String>(
                 context,

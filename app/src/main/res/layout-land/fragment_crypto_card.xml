@@ -15,7 +15,8 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.195">
+            android:layout_weight="1.195"
+            android:background="@color/others_tin">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

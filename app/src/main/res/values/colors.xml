@@ -9,5 +9,6 @@
     <color name="btc">#FF9900</color>
     <color name="eth">#1F407A</color>
     <color name="liteColorPrimaryDark">#33003300</color>
+    <color name="others_tin">#999BE466</color>
     <!--FF4081-->
 </resources>
