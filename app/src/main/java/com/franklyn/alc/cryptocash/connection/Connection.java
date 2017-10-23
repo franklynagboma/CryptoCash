@@ -3,6 +3,8 @@ package com.franklyn.alc.cryptocash.connection;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
+import android.util.Log;
 
 /**
  * Created by AGBOMA franklyn on 22/10/17.

@@ -65,6 +65,9 @@ public class HostActivity extends AppCompatActivity
         cryptoCardFragment = new CryptoCardFragment();
         calculateFragment = new CalculateFragment();
 
+        if(!ConnectionReceiver.isConnected())
+            showConnectionDialog();
+
     }
 
     public void setHostToPresenter(CryptoInterface.HostToPresenter
@@ -98,12 +101,10 @@ public class HostActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        if(!ConnectionReceiver.isConnected())
-            showConnectionDialog();
-
         if(!currentFragment.equals(CRYPTO_TAG)){
             //get cashValue list;
             AppController.getInstance().startProgress("Loading...", this);
@@ -111,12 +112,6 @@ public class HostActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(null != build && build.isShowing())
-            build.dismiss();
-    }
 
     private void showConnectionDialog() {
         View settings = LayoutInflater.from(this).inflate(R.layout.settings_dialog, null, false);
@@ -131,7 +126,9 @@ public class HostActivity extends AppCompatActivity
                 .positiveColorRes(R.color.colorPrimaryDark)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    public void onClick(@NonNull MaterialDialog dialog,
+                                        @NonNull DialogAction which) {
+                        dialog.dismiss();
                         Intent intent = new Intent(Settings.ACTION_SETTINGS);
                         if(intent.resolveActivity(HostActivity.this.getPackageManager()) != null)
                             startActivityForResult(intent, NETWORK_CODE);
@@ -188,6 +185,8 @@ public class HostActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(null != build && build.isShowing())
+            build.dismiss();
     }
 
     @Override
@@ -259,6 +258,8 @@ public class HostActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == NETWORK_CODE && resultCode == RESULT_OK) {
             //call onResume to get Cash API and load Fragment
+
+            Log.i(LOG_TAG, "status is okay");
             onResume();
         }
         else {
