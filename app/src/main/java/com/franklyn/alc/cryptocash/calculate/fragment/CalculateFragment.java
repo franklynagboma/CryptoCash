@@ -181,6 +181,7 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
         if(null != savedInstanceState) {
             rgId = savedInstanceState.getInt(RG, -1);
             editValue.setText(savedInstanceState.getString(EDIT_VALUE, ""));
+            editValue.setSelection(editValue.getText().length());
             conversionValue.setText(savedInstanceState.getString(CONVERTED, ""));
         }
 

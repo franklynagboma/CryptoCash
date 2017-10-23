@@ -10,4 +10,5 @@
     <dimen name="edit_text">20sp</dimen>
     <dimen name="display_text">25sp</dimen>
     <dimen name="btn">22sp</dimen>
+    <dimen name="logo_size">85dp</dimen>
 </resources>

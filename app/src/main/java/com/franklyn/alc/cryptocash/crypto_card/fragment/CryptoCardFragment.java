@@ -39,8 +39,8 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
     private final String ADD_CARD = "add_card_fragment";
     private boolean isTab, isLand;
     private CustomAdapter customAdapter;
-    @BindView(R.id.app_name)
-    TextView appName;
+    /*@BindView(R.id.app_name)
+    TextView appName;*/
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.items_list)
@@ -82,7 +82,7 @@ public class CryptoCardFragment extends Fragment implements AddCardFragment.Send
         ButterKnife.bind(this, cardItems);
 
         context = getActivity();
-        appName.setTypeface(AppController.getSegoeBold(context));
+        //appName.setTypeface(AppController.getSegoeBold(context));
 
         itemList.setHasFixedSize(true);
         if(!isTab)
