@@ -216,7 +216,8 @@ public class CalculateFragment extends Fragment implements RadioGroup.OnCheckedC
     public void OnCovertBtnClicked() {
         if(checked && notEmpty){
             //call api to get value
-            AppController.getInstance().startProgress("Converting " +rgSelected +"...", context);
+            AppController.getInstance().startProgress("Converting to " +rgNotSelected
+                    +"...", context);
             calculateToPresenter.sendCalculateDetails(rgSelected, rgNotSelected,
                     editValue.getText().toString(), cryptoName.getText().toString(), cash);
         }
