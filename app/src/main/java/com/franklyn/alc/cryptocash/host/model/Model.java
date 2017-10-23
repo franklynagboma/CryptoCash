@@ -40,15 +40,14 @@ public class Model {
 
     public void getCashValue() {
         //just for text
-        AppController.cashReceived = true;
+        /*AppController.cashReceived = true;
         AppController.cashValueList.put("NGN", 300.0);
         AppController.cashValueList.put("GHS", 200.0);
         AppController.cashValueList.put("CNY", 500.0);
         AppController.cashValueList.put("EUR", 700.0);
-        modelToPresenterHost.cashReceived("");
+        modelToPresenterHost.cashReceived("");*/
 
-
-        /*JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 AppController.BASE_CASH_API, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -137,6 +136,6 @@ public class Model {
 
         request.setRetryPolicy(new DefaultRetryPolicy(10000, 3,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        AppController.getInstance().addToRequestQueue(request, AppController.TAG);*/
+        AppController.getInstance().addToRequestQueue(request, AppController.TAG);
     }
 }
